@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>High Scores</title>
+        <link rel="stylesheet" href="app.css">
+        <link rel="stylesheet" href="/highscores.css">
+    </head>
+    <body>
+        
+    <div class="container">
+        <div id="container" class="flex-center flex-column">
+            <h1 id="finalScore">High Scores</h1>
+            <h3 id="finalScore">User - Score</h3>
+            <div class="list">
+            <ul id="highScoresList">
+                {{#each scores}}
+                    <li class="high-score">{{this.username}} - {{this.score}}</li>
+                {{/each}}
+            </ul>
+            </div>
+            <a href="/" class="btn">Go Home</a>
+            <a href="/game" class="btn">Play Again</a>
+        </div>
+    </div>
+        
+    </body>
+</html>
