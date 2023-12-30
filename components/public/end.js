@@ -3,12 +3,12 @@ const saveScoreBtn = document.getElementById('saveScoreBtn');
 const finalScore = document.getElementById('finalScore');
 const inputScore = document.getElementById('inputScore');
 const mostRecentScore = localStorage.getItem('mostRecentScore');
-const form = document.getElementById('formSubmit');
+const levelInput = document.getElementById('inputLevel');
 
 const urlParams = new URLSearchParams(window.location.search);
 const level = urlParams.get('level');
 
-form.action = `/highscores?level=${level}`;
+
 
 const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 
@@ -21,4 +21,5 @@ console.log(mostRecentScore);
 
 finalScore.innerText = mostRecentScore;
 inputScore.value = mostRecentScore;
+inputLevel.value = level;
 

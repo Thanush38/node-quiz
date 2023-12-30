@@ -15,6 +15,7 @@ const client = new MongoClient(uri, {
 });
 
 async function run() {
+  console.log("run function");
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
@@ -23,14 +24,6 @@ async function run() {
     let collection = database.collection("easy");
     
 
-   
-    // print a message if no documents were found
-    // if ((await cursor.countDocument()) === 0) {
-    //     console.log("No documents found!");
-    // }
-
-
-    //ping the database
     await client.db("quiz").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
     const options = {
@@ -65,7 +58,6 @@ async function run() {
         hard.push(doc);
     }
     scores.push(hard);
-    console.log(scores);
 
 
 
@@ -79,20 +71,53 @@ async function run() {
 run().catch(console.dir);
 console.log("connected");
 
-const  postData = async (name, score) => {
-    try {
-        await client.connect();
-        await client.db("quiz").command({ ping: 1 });
-        const database = client.db("quiz");
-        const collection = database.collection("highscores");
-        const doc = { username:name, score:score  };
-        const result = await collection.insertOne(doc);
-        console.log(
-            `${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`,
-        );
-    } finally {
-        await client.close();
-    }
+// const  postData = async (name, score, level) => {
+//     try {
+//         await client.connect();
+//         await client.db("quiz").command({ ping: 1 });
+//         const database = client.db("quiz");
+//         if (level == "easy") {
+//             collection = database.collection("easy");
+//         }
+//         else if (level == "medium") {
+//             collection = database.collection("medium");
+//         }
+//         else if (level == "hard") {
+//             collection = database.collection("hard");
+//         }
+//         else {
+//             console.log("error");
+//             collection = database.collection("easy");
+//         }
+//         const doc = { username:name, score:score  };
+//         const result = await collection.insertOne(doc);
+//         console.log(
+//             `${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`,
+//         );
+//     } finally {
+//         await client.close();
+//     }
+// }
+
+const  postData = async (name, score, level) => {
+  try {
+      await client.connect();
+      await client.db("quiz").command({ ping: 1 });
+      const database = client.db("quiz");
+      console.log("before collection")
+      const collection = database.collection(level);
+      console.log("after collection")
+      const doc = { username:name, score:score  };
+      const result = await collection.insertOne(doc);
+      console.log("after result")
+      console.log(
+          `${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`,
+      );
+      console.log("after result log")
+  } finally {
+      await client.close();
+      run().catch(console.dir);
+  }
 }
 
 
@@ -110,9 +135,9 @@ router.get('/highscores', (req, res,next) => {
 );
 router.post('/highscores', (req, res,next) => {
     console.log(req.body.username);
-    let level = req.query.level;
-    console.log(level);
-    postData(req.body.username, req.body.score);
+    console.log(req.body.level)
+    
+    postData(req.body.username, req.body.score, req.body.level).catch(console.dir);
     res.redirect('/highscores');
     }
 );

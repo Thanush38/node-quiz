@@ -12,9 +12,10 @@
         <div id="end" class="flex-center flex-column">
             
             <h1 id="finalScore">0</h1>
-            <form action="/highscores?level=easy" method="POST" id="formSubmit">
+            <form action="/highscores" method="POST" id="formSubmit">
                 <input type="text" name="username" id="username" placeholder="username" value=""/>
                 <input type="label" name="score" id="inputScore" hidden />
+                <input type="label" name="level" id="inputLevel"  hidden/>
                 <button type="submit" class="btn" id="saveScoreBtn" >Save</button>
             </form>
             
