@@ -20,10 +20,8 @@ async function run() {
     await client.connect();
     // Send a ping to confirm a successful connection
     const database = client.db("quiz");
-    const collection = database.collection("highscores");
-    console.log("before");
-    console.log(collection);
-    const query = { name: "thanush" };
+    let collection = database.collection("easy");
+    
 
    
     // print a message if no documents were found
@@ -43,16 +41,35 @@ async function run() {
         };
 
     
-    const cursor = collection.find();
+    let cursor = collection.find();
     console.log("after");
-    if((await collection.countDocuments(query)) === 0) {
-        console.log("No documents found!");
-    }
     scores = [];
+    easy = [];
     for await (const doc of cursor) {
-        scores.push(doc);
-        console.log(doc);
+        easy.push(doc);
     }
+    scores.push(easy);
+
+    collection = database.collection("medium");
+    cursor = collection.find();
+    medium = [];
+    for await (const doc of cursor) {
+        medium.push(doc);
+    }
+    scores.push(medium);
+
+    collection = database.collection("hard");
+    cursor = collection.find();
+    hard = [];
+    for await (const doc of cursor) {
+        hard.push(doc);
+    }
+    scores.push(hard);
+    console.log(scores);
+
+
+
+
 
   } finally {
     // Ensures that the client will close when you finish/error
@@ -84,11 +101,17 @@ const router = express.Router();
 
 router.get('/highscores', (req, res,next) => {
     run().catch(console.dir);
-    res.render('highscores', {scores: scores});
+    res.render('highscores', {
+      easy: scores[0],
+      medium: scores[1],
+      hard: scores[2]
+    });
     }
 );
 router.post('/highscores', (req, res,next) => {
     console.log(req.body.username);
+    let level = req.query.level;
+    console.log(level);
     postData(req.body.username, req.body.score);
     res.redirect('/highscores');
     }

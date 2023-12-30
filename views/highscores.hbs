@@ -10,14 +10,16 @@
     </head>
     <body>
         
-        <div class="mcontainer">
-            <h1 id="finalScore">High Scores</h1>
+        {{!-- <div class="mcontainer"> --}}
             <div class="ncontainer clearfix">
+            <div class="center">
+                <h1 id="finalScore">High Scores</h1>
+            </div>
                 <div class="column">
                     <h2>Easy</h2>
                     <div class="list">
                                     <ul id="highScoresList">
-                                        {{#each scores}}
+                                        {{#each easy}}
                                             <li class="high-score">{{this.username}} - {{this.score}}</li>
                                         {{/each}}
                                     </ul>
@@ -27,7 +29,7 @@
                     <h2>Medium</h2>
                     <div class="list">
                                     <ul id="highScoresList">
-                                        {{#each scores}}
+                                        {{#each medium}}
                                             <li class="high-score">{{this.username}} - {{this.score}}</li>
                                         {{/each}}
                                     </ul>
@@ -37,17 +39,19 @@
                     <h2>Hard</h2>
                     <div class="list">
                                     <ul id="highScoresList">
-                                        {{#each scores}}
+                                        {{#each hard}}
                                             <li class="high-score">{{this.username}} - {{this.score}}</li>
                                         {{/each}}
                                     </ul>
                                 </div>
                 </div>
-                <div class="column">
+                <div class="button-container">
+                {{!-- </div class="btnWrapper"> --}}
                             <a href="/" class="btn">Go Home</a>
                             <a href="/game" class="btn">Play Again</a>
+                {{!-- </div> --}}
                 </div>
-            </div>
+            {{!-- </div> --}}
         </div>
         
     </body>

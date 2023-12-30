@@ -43,18 +43,18 @@
     align-items: center;
 }   
 .ncontainer {
-    /* width: 100vw; */
     height: 100vh;
     margin: 0 auto;
     overflow: hidden;
   }
   .column {
-    width: 30%;
+    width: 20%;
+    height: 70%;
     float: left;
     margin: 10px;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #f2f2f2;
+    background-color: #65c7eb;
   }
 
   /* Clear floats after the columns */
@@ -72,3 +72,30 @@
       float: none;
     }
   }
+
+
+.button-container{
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.btnWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.center{
+    padding-top: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

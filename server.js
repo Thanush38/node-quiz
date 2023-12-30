@@ -8,6 +8,7 @@ const highScores = require('./components/routes/highScores');
 const end = require('./components/routes/end');
 const game = require('./components/routes/game');
 const expressHbs = require('express-handlebars');
+const level = require('./components/routes/level');
 
 app.engine(
     'hbs',
@@ -30,6 +31,8 @@ app.use(highScores);
 app.use(end);
 
 app.use(game);
+
+app.use(level);
 
 
 app.listen(port, () => {

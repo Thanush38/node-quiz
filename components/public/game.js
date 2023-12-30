@@ -5,6 +5,14 @@ const scoreText = document.getElementById('score');
 const progressBarFull = document.getElementById('progressBarFull');
 const loader = document.getElementById('loader');
 const game = document.getElementById('game');
+// console.log(document.body.querySelector('script[data]').getAttribute('level'));
+// const level = JSON.parse(document.body.querySelector('script[data]').getAttribute('level'));
+// console.log(level);
+
+const urlParams = new URLSearchParams(window.location.search);
+const level = urlParams.get('level');
+
+const url = 'https://opentdb.com/api.php?amount=10&difficulty=' + level + '&type=multiple';
 
 
 let currentQuestion = {};
@@ -16,7 +24,7 @@ let availableQuesions = [];
 let questions = [];
 
 fetch(
-    'https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple'
+    url
 )
     .then((res) => {
         return res.json();
@@ -67,7 +75,7 @@ startGame = () => {
 getNewQuestion = () => {
     if (availableQuesions.length === 0 || questionCounter >= MAX_QUESTIONS) {
         localStorage.setItem("mostRecentScore", score);
-        return window.location.assign('/end');
+        return window.location.assign('/end?level=' + level);
     }
     questionCounter++;
     progressText.innerText = "Question " + questionCounter + '/' +  MAX_QUESTIONS;
