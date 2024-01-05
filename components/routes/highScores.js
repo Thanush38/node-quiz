@@ -14,10 +14,10 @@ const client = new MongoClient(uri, {
   }
 });
 
+
 async function run() {
   console.log("run function");
   try {
-    // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
     const database = client.db("quiz");
@@ -41,7 +41,9 @@ async function run() {
     for await (const doc of cursor) {
         easy.push(doc);
     }
+    easy.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
     scores.push(easy);
+    console.log("after easy scores")
 
     collection = database.collection("medium");
     cursor = collection.find();
@@ -49,6 +51,7 @@ async function run() {
     for await (const doc of cursor) {
         medium.push(doc);
     }
+    medium.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
     scores.push(medium);
 
     collection = database.collection("hard");
@@ -57,7 +60,9 @@ async function run() {
     for await (const doc of cursor) {
         hard.push(doc);
     }
+    hard.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
     scores.push(hard);
+    console.log("after adding scores")
 
 
 
@@ -66,43 +71,19 @@ async function run() {
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
+    console.log("closed connection in finally run")
   }
 }
 run().catch(console.dir);
 console.log("connected");
 
-// const  postData = async (name, score, level) => {
-//     try {
-//         await client.connect();
-//         await client.db("quiz").command({ ping: 1 });
-//         const database = client.db("quiz");
-//         if (level == "easy") {
-//             collection = database.collection("easy");
-//         }
-//         else if (level == "medium") {
-//             collection = database.collection("medium");
-//         }
-//         else if (level == "hard") {
-//             collection = database.collection("hard");
-//         }
-//         else {
-//             console.log("error");
-//             collection = database.collection("easy");
-//         }
-//         const doc = { username:name, score:score  };
-//         const result = await collection.insertOne(doc);
-//         console.log(
-//             `${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`,
-//         );
-//     } finally {
-//         await client.close();
-//     }
-// }
+
+
+
 
 const  postData = async (name, score, level) => {
   try {
       await client.connect();
-      await client.db("quiz").command({ ping: 1 });
       const database = client.db("quiz");
       console.log("before collection")
       const collection = database.collection(level);
@@ -115,8 +96,9 @@ const  postData = async (name, score, level) => {
       );
       console.log("after result log")
   } finally {
-      await client.close();
-      run().catch(console.dir);
+    await client.close();
+    run().catch(console.dir);
+    
   }
 }
 
