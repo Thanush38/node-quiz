@@ -36,7 +36,7 @@ app.use(level);
 
 
 app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+    console.log(`Example app listening at http://localhost:${port}`)
 }
 );
 
