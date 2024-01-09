@@ -72,7 +72,7 @@ const  postData = async (name, score, level) => {
       const database = client.db("quiz");
       const collection = database.collection(level);
       const doc = { username:name, score:score  };
-      const result = await collection.insertOne(doc);
+      await collection.insertOne(doc);
       
   } finally {
     await client.close();
