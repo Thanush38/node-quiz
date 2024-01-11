@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const port = 3000;
 const parse = require('body-parser');
 const path = require('path');
 const home = require('./components/routes/home');
@@ -9,7 +8,11 @@ const end = require('./components/routes/end');
 const game = require('./components/routes/game');
 const expressHbs = require('express-handlebars');
 const level = require('./components/routes/level');
+const compression = require('compression');
 
+const PORT = process.env.PORT || 3000;
+
+app.use(compression());
 app.engine(
     'hbs',
     expressHbs.engine({
@@ -35,8 +38,8 @@ app.use(game);
 app.use(level);
 
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+app.listen(PORT, () => {
+    console.log(`Example app listening at http://localhost:${PORT}`)
 }
 );
 
