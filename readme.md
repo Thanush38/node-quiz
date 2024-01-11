@@ -2,6 +2,8 @@
 
 This is a web application built using Node.js, Express, and MongoDB to create a quiz with three difficulty levels (easy, medium, and hard). High scores for each level are stored in a MongoDB database.
 
+You can view a hosted application at [Quiz App](https://node-quiz-48f2858a076b.herokuapp.com/)
+
 ## Features
 
 - Multiple quiz levels (easy, medium, hard)
@@ -32,7 +34,13 @@ cd quiz-application
 ```bash
 npm install
 ```   
-4. Start the application
+5. create a cluster on MongoDB. Following that create a database called quiz with three collections called: easy; medium;hard
+6. create a .env file and paste following code into it while changing username and password to your respective user
+```
+MONGODB_URI = "mongodb+srv://<username>:<password>@cluster0.nd7iykw.mongodb.net/?retryWrites=true&w=majority";
+```
+For more help with MongoDB please visit [MongoDB Documentation](https://www.mongodb.com/docs/drivers/node/current/)
+7. Start the application
 ```bash
 npm start
 ```      

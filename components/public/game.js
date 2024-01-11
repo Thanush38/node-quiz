@@ -5,9 +5,6 @@ const scoreText = document.getElementById('score');
 const progressBarFull = document.getElementById('progressBarFull');
 const loader = document.getElementById('loader');
 const game = document.getElementById('game');
-// console.log(document.body.querySelector('script[data]').getAttribute('level'));
-// const level = JSON.parse(document.body.querySelector('script[data]').getAttribute('level'));
-// console.log(level);
 
 const urlParams = new URLSearchParams(window.location.search);
 const level = urlParams.get('level');

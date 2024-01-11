@@ -1,11 +1,13 @@
 const express = require('express');
 const path = require('path');
-
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://Thanush38:Codingkobz3@cluster0.nd7iykw.mongodb.net/?retryWrites=true&w=majority";
+//enable .env file to store sensitive data
+require('dotenv').config();
+const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/quiz";
+//scores variable to store the scores from the database
 let scores = [];
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// Creates a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -14,16 +16,12 @@ const client = new MongoClient(uri, {
   }
 });
 
-
+//async function to get the scores from the database and store them in the scores variable
 async function run() {
   try {
     await client.connect();
     const database = client.db("quiz");
     let collection = database.collection("easy");
-    
-
-
-    
     let cursor = collection.find();
     scores = [];
     easy = [];
@@ -65,7 +63,7 @@ run().catch(console.dir);
 
 
 
-
+//async function to post the scores to the database
 const  postData = async (name, score, level) => {
   try {
       await client.connect();
@@ -84,6 +82,7 @@ const  postData = async (name, score, level) => {
 
 const router = express.Router();
 
+// sends the highscores page
 router.get('/highscores', async (req, res,next) => {
     await run().catch(console.dir);
     res.render('highscores', {
@@ -93,6 +92,7 @@ router.get('/highscores', async (req, res,next) => {
     });
     }
 );
+// posts the scores to the database and redirects to the highscores page
 router.post('/highscores', async (req, res,next) => {
     
     await postData(req.body.username, req.body.score, req.body.level).catch(console.dir);
